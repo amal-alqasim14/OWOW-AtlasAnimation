@@ -1,0 +1,95 @@
+:root {
+    --top-bar-height: 50px;
+    --side-bar-width: 200px;
+}
+
+#root {
+    width: 100dvw;
+    height: 100dvh;
+    padding: 0;
+    margin: 0;
+    background-color: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-areas: "top top"
+                         "left content";
+    grid-template-columns: var(--side-bar-width) 1fr;
+    grid-template-rows: var(--top-bar-height) 1fr;
+}
+
+#root * {
+    color: white;
+    font-family: var(--mono);
+    box-sizing: border-box;
+}
+
+#root > * {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+}
+
+#top-bar {
+    grid-area: top;
+    color: red;
+    border-bottom: 1px solid white;
+    display: grid;
+    grid-template-columns: calc(var(--side-bar-width) - 10px) 1fr;
+    column-gap: 10%;
+}
+
+#logo {
+    height: calc(var(--top-bar-height) - 20px);
+    max-width: calc(var(--top-bar-width) - 20px);
+    box-sizing: border-box;
+}
+
+#side-bar {
+    grid-area: left;
+    border-right: 1px solid white;
+    overflow: auto;
+}
+
+#side-bar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#content {
+    grid-area: content;
+    overflow: auto;
+}
+
+#search-bar {
+    field-sizing: content;
+    color: black;
+    min-width: 300px;
+    max-width: 50%;
+    overflow: visible;
+}
+
+#search-filter-values {
+    display: none;
+    visibility: collapse;
+}
+
+.filter-button {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+}
