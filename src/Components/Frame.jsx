@@ -22,7 +22,7 @@ export function Frame() {
         <>
             <div id="top-bar">
                 <img src={logo} id="logo" />
-                <input type="text" name="search-bar" id="search-bar" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
+                <input type="text" name="search-bar" id="search-bar" placeholder="Search animations..." onChange={(e) => setSearch(e.target.value)} />
             </div>
             <div id="side-bar">
                 <p>Filters</p>

@@ -1,6 +1,7 @@
 :root {
-    --top-bar-height: 50px;
-    --side-bar-width: 200px;
+    --top-bar-height: 108px;
+    --side-bar-width: 248px;
+    --top-bar-inline-padding: 20px;
 }
 
 #root {
@@ -8,7 +9,7 @@
     height: 100dvh;
     padding: 0;
     margin: 0;
-    background-color: #000;
+    background-color: #171717;
     position: fixed;
     top: 0;
     left: 0;
@@ -34,17 +35,22 @@
 
 #top-bar {
     grid-area: top;
-    color: red;
     border-bottom: 1px solid white;
     display: grid;
-    grid-template-columns: calc(var(--side-bar-width) - 10px) 1fr;
-    column-gap: 10%;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    column-gap: 32px;
+    padding: 8px var(--top-bar-inline-padding);
 }
 
 #logo {
-    height: calc(var(--top-bar-height) - 20px);
-    max-width: calc(var(--top-bar-width) - 20px);
+    height: 52px;
+    width: calc(var(--side-bar-width) - var(--top-bar-inline-padding));
+    max-width: none;
+    object-fit: contain;
+    object-position: left center;
     box-sizing: border-box;
+    justify-self: start;
 }
 
 #side-bar {
@@ -54,7 +60,6 @@
 }
 
 #side-bar ul {
-    list-style: none;
     padding: 0;
     margin: 0;
 }
@@ -65,11 +70,21 @@
 }
 
 #search-bar {
-    field-sizing: content;
-    color: black;
-    min-width: 300px;
-    max-width: 50%;
-    overflow: visible;
+    justify-self: start;
+    width: min(720px, 82%);
+    height: 52px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    background-color: #111216;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0 24px;
+    outline: none;
+}
+
+#search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 #search-filter-values {
