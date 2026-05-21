@@ -4,6 +4,7 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import './index.css'
 import { Frame } from './Components/Frame.jsx'
 import App from './App.jsx'
+import Details from './Components/Details.jsx'
 
 createRoot(document.getElementById('root')).render(
   <>
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')).render(
       <Router>
         <Routes>
           <Route path="/" element={<App />} />
+          <Route path="/details" element={<Details />} />
         </Routes>
       </Router>
       {/* <StrictMode>
