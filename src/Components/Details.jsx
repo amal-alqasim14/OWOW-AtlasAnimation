@@ -3,15 +3,12 @@ import "./Details.css";
 import { useEffect } from "react";
 
 // Needs to be changed to vids
-import cursorGIF from "../assets/gifs/Cursor-driven perspective tilt GIF.gif";
-import cursortrack from "../assets/gifs/Cursor-Tracking Image Preview GIF.gif";
-import explorework from "../assets/gifs/Explore our work GIF.gif";
-import horizontalscroll from "../assets/gifs/Horizontal Scroll Pics GIF.gif";
-import horizontaltext from "../assets/gifs/Horizontal Text GIF.gif";
-import macdock from "../assets/gifs/MacOS Dock Effect GIF.gif";
-import proximity from "../assets/gifs/Proximity scale grid GIF.gif";
-import scrollflower from "../assets/gifs/Scroll Flower GIF.gif";
-import bentogallery from "../assets/gifs/Scrubbed Bento Gallery GIF.gif";
+import item1 from "../assets/images/item1.webm";
+import item2 from "../assets/images/item2.webm";
+import item3 from "../assets/images/item3.webm";
+import item4 from "../assets/images/item4.webm";
+import item5 from "../assets/images/item5.webm";
+import item6 from "../assets/images/item6.webm";
 
 const ANIMATION = {
     title: "Cursor Tracking Image",
@@ -22,15 +19,15 @@ const ANIMATION = {
         "onComplete onUpdate quickSetter quickTo utils.toArray",
         "Power2 Power3 Power4 Back Elastic Bounce Expo Sine",
     ],
-    previewImage: cursorGIF,
+    previewVideo: item1,
     description: `This animation creates a "text scrambling" or "decrypting" effect where letters rapidly cycle through random characters before resolving into readable text. It gives the impression of a system decoding data in real time. The animation typically transitions from chaotic noise into a clean final message, making it feel dynamic, futuristic, and interactive.`,
     goodFor: "Short phrases, headings, or key UI moments.",
     avoidFor: "Large blocks of body text.",
     code: `// use the defaults\ngsap.to(element, { duration: 1, scrambleText: "THIS IS NEW TEXT!" });\n\n// for customize things\ngsap.to(element, {\n  duration: 1,\n  scrambleText: {\n    text: "THIS IS NEW TEXT",\n    chars: "liz",\n    revealDelay: 0.5,\n    speed: 0.3,\n    newClass: "myClass"\n  }\n});`,
     related: [
-        { id: 1, title: "Cursor Tracking Image",  image: cursortrack,   tags: ["restart reverse scrub pin markers overwrite modifiers"] },
-        { id: 2, title: "MacOS Dock Effect",       image: macdock, tags: ["toggleActions start end once refresh from to"] },
-        { id: 3, title: "Proximity Scale Grid",    image: proximity,   tags: ["ScrollSmoother Flip Draggable SplitText"] },
+        { id: 1, title: "Cursor Tracking Image",  video: item2,   tags: ["restart reverse scrub pin markers overwrite modifiers"] },
+        { id: 2, title: "MacOS Dock Effect",       video: item3, tags: ["toggleActions start end once refresh from to"] },
+        { id: 3, title: "Proximity Scale Grid",    video: item4,   tags: ["ScrollSmoother Flip Draggable SplitText"] },
     ],
 };
 
@@ -67,11 +64,19 @@ export function Details() {
                                 <li key={i} className="details-tag">{tag}</li>
                             ))}
                         </ul> */}
-                        <img 
-                            src={ANIMATION.previewImage} 
-                            id="details-hero-img" 
+                        <video 
+                            src={ANIMATION.previewVideo} 
+                            id="details-hero-video" 
                             alt="preview" 
-                            // onMouseEnter={e => e.target.src = ANIMATION} TO BE CONTINUED
+                            loop
+                            muted
+                            playsInline
+                            preload="metadata"
+                            onMouseEnter={(e) => e.currentTarget.play()}
+                            onMouseLeave={(e) =>{
+                                e.currentTarget.pause();
+                                e.currentTarget.currentTime = 0;
+                            }}
                         />
                     </div>
 
@@ -148,7 +153,20 @@ export function Details() {
                     {ANIMATION.related.map((item) => (
                         <div key={item.id} className="related-card">
                             <div className="related-card-img-wrap">
-                                <img src={item.image} alt={item.title} className="related-card-img" />
+                                <video 
+                                    src={item.video} 
+                                    alt={item.title} 
+                                    className="related-card-img" 
+                                    loop
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    onMouseEnter={(e) => e.currentTarget.play()}
+                                    onMouseLeave={(e) =>{
+                                        e.currentTarget.pause();
+                                        e.currentTarget.currentTime = 0;
+                                    }}
+                                />
                             </div>
                             <div className="related-card-tags">
                                 {item.tags.map((t, i) => <p key={i} className="related-card-tag">{t}</p>)}
