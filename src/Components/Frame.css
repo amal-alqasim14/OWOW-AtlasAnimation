@@ -1,10 +1,16 @@
 :root {
+    --grow: 1;
+    --slide: 0;
+    --flip-x: 0;
+    --flip-y: 0;
+    --spin-grow: 0;
     --top-bar-height: 50px;
     --side-bar-width: 200px;
 }
 
 #root {
     width: 100dvw;
+    min-width: 250px;
     height: 100dvh;
     padding: 0;
     margin: 0;
@@ -33,16 +39,22 @@
     overflow: hidden;
 }
 
-#menu {
-    visibility: collapse;
-}
-
 #top-bar {
     grid-area: top;
-    color: red;
     border-bottom: 1px solid white;
+    background-color: #000;
     display: grid;
     grid-template-columns: calc(var(--top-bar-height) - 10px) calc(var(--side-bar-width) - 10px) 1fr;
+    grid-template-rows: 1fr;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+#menu {
+    visibility: collapse;
+    height: calc(var(--top-bar-height) - 20px);
+    aspect-ratio: 1;
 }
 
 #logo {
@@ -51,25 +63,41 @@
     box-sizing: border-box;
 }
 
-#menu.menu-collapsed {
-    background-color: black;
-    border: 2px solid white;
+.search-bar {
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid white;
     color: white;
-    height: 100%;
-    aspect-ratio: 1;
 }
 
-#search-bar {
+#search-bar-top {
     field-sizing: content;
-    color: black;
-    min-width: 300px;
+    min-width: 10%;
     max-width: 50%;
-    overflow: visible;
+    font-size: x-large;
+    visibility: visible;
+}
+
+#search-bar-top:active {
+    border: none;
+}
+
+#search-bar-bottom {
+    field-sizing: content;
+    min-width: 10%;
+    max-width: 50%;
+    visibility: collapse;
+}
+
+#search-button {
+    width: 20%;
+    visibility: collapse;
 }
 
 #side-bar {
     grid-area: left;
     border-right: 1px solid white;
+    background-color: #000e;
     overflow: auto;
 }
 
@@ -91,16 +119,116 @@
                              "content";
     }
 
+    #top-bar {
+        grid-template-columns: 1fr 3fr;
+        animation: shrink-top-bar forwards 5s;
+    }
+
+    @keyframes shrink-top-bar {
+        from {
+            grid-template-columns: calc(var(--top-bar-height) - 10px) calc(var(--side-bar-width) - 10px) 1fr;
+        }
+        to {
+            grid-template-columns: 1fr 3fr;
+        }
+        
+    }
+
+    #logo {
+        left: 50%;
+        transform: translatex(-50%);
+        position: fixed;
+    }
+
     #menu {
         visibility: visible;
+    }
+
+    #menu.menu-expanded {
+        background-color: white;
+        border: 2px solid black;
+        color: black;
+    }
+
+    #menu.menu-collapsed {
+        background-color: black;
+        border: 2px solid white;
+        color: white;
+    }
+    
+    #search-bar-top {
+        visibility: collapse;
+    }
+
+    #search-bar-bottom {
+        visibility: visible;
+        min-width: 80%;
+    }
+
+    #search-button {
+        visibility: visible;
+        background-color: transparent;
+        border: 1px solid white;
+        border-radius: 1vw;
     }
 
     #side-bar {
         grid-area: content;
         position: fixed;
         width: 100vw;
-        height: 100%;
+        height: fit-content;
+        /* visibility: collapse; */
+        border-bottom: 1px solid white;
+        border-right: none;
+        overflow: hidden;
+        padding-top: 0; padding-bottom: 0; margin-top: 0; margin-bottom: 0;
     }
+
+    /* extend the menu from the top */
+    @media screen {
+        #side-bar { transform: scale(0%); }
+        #side-bar.menu-expanded { animation: appear-slide .25s forwards ease-in-out; }
+        #side-bar.menu-collapsed { animation: disappear-slide .25s forwards ease-in-out; }
+        @keyframes appear-slide { from { transform: scale(0%); } to { transform: scale(100%); } }
+        @keyframes disappear-slide { from { transform: scale(100%); } to { transform: scale(0%); } }
+    }
+
+    /* extend the menu from the top */
+    @media screen and (--slide) {
+        #side-bar { transform: translate(-100%); }
+        #side-bar.menu-expanded { animation: appear-slide .25s forwards ease-in-out; }
+        #side-bar.menu-collapsed { animation: disappear-slide .25s forwards ease-in-out; }
+        @keyframes appear-slide { from { transform: translatey(0%); } to { transform: translatey(100%); } }
+        @keyframes disappear-slide { from { transform: translatey(100%); } to { transform: translatey(0%); } }
+    }
+
+    /* flip the second menu open */
+    @media screen and (flip-y) {
+        #side-bar { transform: rotatey(-90deg) }
+        #side-bar.menu-expanded { animation: appear-flip-y .25s forwards ease-in-out; }
+        #side-bar.menu-collapsed { animation: disappear-flip-y .25s forwards ease-in-out; }
+        @keyframes appear-flip-y { from { transform: rotatey(-90deg); } to { transform: rotate(0deg); } }
+        @keyframes disappear-flip-y { from { transform: rotatey(0deg); } to { transform: rotate(-90deg); } }
+    }
+
+    /* flip the second menu open */
+    @media screen and (--flip-x) {
+        #side-bar { transform: rotatex(-90deg) }
+        #side-bar.menu-expanded { animation: appear-flip-x .25s forwards ease-in-out; }
+        #side-bar.menu-collapsed { animation: disappear-flip-x .25s forwards ease-in-out; }
+        @keyframes appear-flip-x { from { transform: rotatex(-90deg); } to { transform: rotateX(0deg); } }
+        @keyframes disappear-flip-x { from { transform: rotatex(0deg); } to { transform: rotateX(-90deg); } }
+    }
+    
+    /* spin and grow the second menu open */
+    @media screen and (--spin-grow) {
+        #side-bar { transform: rotate(-90deg) scale(0%); }
+        #side-bar.menu-expanded { animation: appear-grow .25s forwards ease-in-out; }
+        #side-bar.menu-collapsed { animation: disappear-shrink .25s forwards ease-in-out; }
+        @keyframes appear-grow { from { transform: rotate(-90deg) scale(0%); } to { transform: rotate(0deg) scale(100%); } }
+        @keyframes disappear-shrink { from { transform: rotate(0deg) scale(100%); } to { transform: rotate(-90deg) scale(0%); } }
+    }
+
 }
 
 #content {
