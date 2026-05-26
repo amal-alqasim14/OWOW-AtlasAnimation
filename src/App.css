@@ -138,7 +138,8 @@
 	padding: var(--image-gutter-y) 0;
 }
 
-.preview-card img {
+.preview-card img,
+.preview-card video {
 	display: block;
 	width: 100%;
 	aspect-ratio: 5 / 2;
@@ -193,7 +194,8 @@
 		--image-gutter-y: 48px;
 	}
 
-	.preview-card img {
+	.preview-card img,
+	.preview-card video {
 		aspect-ratio: 5 / 2;
 	}
 }
