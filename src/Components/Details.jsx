@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import "./Details.css";
 
+// Needs to be changed to vids
+import cursorGIF from "../assets/gifs/Cursor-driven perspective tilt GIF.gif";
+import cursortrack from "../assets/gifs/Cursor-Tracking Image Preview GIF.gif";
+import explorework from "../assets/gifs/Explore our work GIF.gif";
+import horizontalscroll from "../assets/gifs/Horizontal Scroll Pics GIF.gif";
+import horizontaltext from "../assets/gifs/Horizontal Text GIF.gif";
+import macdock from "../assets/gifs/MacOS Dock Effect GIF.gif";
+import proximity from "../assets/gifs/Proximity scale grid GIF.gif";
+import scrollflower from "../assets/gifs/Scroll Flower GIF.gif";
+import bentogallery from "../assets/gifs/Scrubbed Bento Gallery GIF.gif";
+
 const ANIMATION = {
     title: "Cursor Tracking Image",
     tags: [
@@ -10,15 +21,15 @@ const ANIMATION = {
         "onComplete onUpdate quickSetter quickTo utils.toArray",
         "Power2 Power3 Power4 Back Elastic Bounce Expo Sine",
     ],
-    previewImage: "https://placehold.co/120x80/2a5a2a/7ecb7e?text=~",
+    previewImage: cursorGIF,
     description: `This animation creates a "text scrambling" or "decrypting" effect where letters rapidly cycle through random characters before resolving into readable text. It gives the impression of a system decoding data in real time. The animation typically transitions from chaotic noise into a clean final message, making it feel dynamic, futuristic, and interactive.`,
     goodFor: "Short phrases, headings, or key UI moments.",
     avoidFor: "Large blocks of body text.",
     code: `// use the defaults\ngsap.to(element, { duration: 1, scrambleText: "THIS IS NEW TEXT!" });\n\n// for customize things\ngsap.to(element, {\n  duration: 1,\n  scrambleText: {\n    text: "THIS IS NEW TEXT",\n    chars: "liz",\n    revealDelay: 0.5,\n    speed: 0.3,\n    newClass: "myClass"\n  }\n});`,
     related: [
-        { id: 1, title: "Cursor Tracking Image",  image: "https://placehold.co/400x225/1a3a1a/7ecb7e?text=~",   tags: ["restart reverse scrub pin markers overwrite modifiers"] },
-        { id: 2, title: "MacOS Dock Effect",       image: "https://placehold.co/400x225/1a1a3a/7e7ecb?text=●●●", tags: ["toggleActions start end once refresh from to"] },
-        { id: 3, title: "Proximity Scale Grid",    image: "https://placehold.co/400x225/2a2a2a/888?text=grid",   tags: ["ScrollSmoother Flip Draggable SplitText"] },
+        { id: 1, title: "Cursor Tracking Image",  image: cursortrack,   tags: ["restart reverse scrub pin markers overwrite modifiers"] },
+        { id: 2, title: "MacOS Dock Effect",       image: macdock, tags: ["toggleActions start end once refresh from to"] },
+        { id: 3, title: "Proximity Scale Grid",    image: proximity,   tags: ["ScrollSmoother Flip Draggable SplitText"] },
     ],
 };
 
@@ -53,7 +64,12 @@ export function Details() {
                                 <li key={i} className="details-tag">{tag}</li>
                             ))}
                         </ul> */}
-                        <img src={ANIMATION.previewImage} id="details-hero-img" alt="preview" />
+                        <img 
+                            src={ANIMATION.previewImage} 
+                            id="details-hero-img" 
+                            alt="preview" 
+                            // onMouseEnter={e => e.target.src = ANIMATION} TO BE CONTINUED
+                        />
                     </div>
 
                     <div id="details-info-row">
