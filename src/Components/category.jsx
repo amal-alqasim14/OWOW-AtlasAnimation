@@ -1,22 +1,11 @@
 import "./category.css";
 import React from "react";
-import logo from "../assets/owow.svg";
 
 
 
-export function category() {
+export function Category() {
   return (
     <div className="owow-page">
-      <header className="topbar">
-        <img src={logo} alt="OWOW" className="logo" />
-
-        <input
-          className="search"
-          type="text"
-          placeholder="Search animations..."
-        />
-      </header>
-
       <main className="content">
         <a href="#/" className="back">&lt; Home</a>
         <h1>Scroll</h1>
@@ -39,4 +28,4 @@ export function category() {
   );
 }
 
-export default category;
+export default Category;

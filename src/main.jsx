@@ -9,7 +9,7 @@ import Category from './Components/category.jsx'
 createRoot(document.getElementById('root')).render(
   <>
     <h1 id="search-filter-values" />
-    {/* <Frame /> */}
+    <Frame />
     <div id="content">
       <Router>
         <Routes>
