@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Details.css";
+import { useEffect } from "react";
 
 const ANIMATION = {
     title: "Cursor Tracking Image",
@@ -16,13 +17,14 @@ const ANIMATION = {
     avoidFor: "Large blocks of body text.",
     code: `// use the defaults\ngsap.to(element, { duration: 1, scrambleText: "THIS IS NEW TEXT!" });\n\n// for customize things\ngsap.to(element, {\n  duration: 1,\n  scrambleText: {\n    text: "THIS IS NEW TEXT",\n    chars: "liz",\n    revealDelay: 0.5,\n    speed: 0.3,\n    newClass: "myClass"\n  }\n});`,
     related: [
-        { id: 1, title: "Cursor Tracking Image",  image: "https://placehold.co/400x225/1a3a1a/7ecb7e?text=~",   tags: ["restart reverse scrub pin markers overwrite modifiers"] },
-        { id: 2, title: "MacOS Dock Effect",       image: "https://placehold.co/400x225/1a1a3a/7e7ecb?text=●●●", tags: ["toggleActions start end once refresh from to"] },
-        { id: 3, title: "Proximity Scale Grid",    image: "https://placehold.co/400x225/2a2a2a/888?text=grid",   tags: ["ScrollSmoother Flip Draggable SplitText"] },
+        { id: 1, title: "Cursor Tracking Image", image: "https://placehold.co/400x225/1a3a1a/7ecb7e?text=~", tags: ["restart reverse scrub pin markers overwrite modifiers"] },
+        { id: 2, title: "MacOS Dock Effect", image: "https://placehold.co/400x225/1a1a3a/7e7ecb?text=●●●", tags: ["toggleActions start end once refresh from to"] },
+        { id: 3, title: "Proximity Scale Grid", image: "https://placehold.co/400x225/2a2a2a/888?text=grid", tags: ["ScrollSmoother Flip Draggable SplitText"] },
     ],
 };
 
 export function Details() {
+
     const [Duration, setDuration] = useState(50);
     const [Delay, setDelay] = useState(20);
     const [Playing, setPlaying] = useState(false);
@@ -147,7 +149,7 @@ export function Details() {
     }
 
     function copyCode() {
-        navigator.clipboard.writeText(ANIMATION.code).catch(() => {});
+        navigator.clipboard.writeText(ANIMATION.code).catch(() => { });
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     }
