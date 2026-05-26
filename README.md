@@ -1,16 +1,63 @@
-# React + Vite
+# OWOW Atlas Animation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React application built with Vite. It provides a minimal setup for developing modern web applications with hot module replacement (HMR) and ESLint rules.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React with Vite for fast development and builds
+- Hot Module Replacement (HMR) for a seamless development experience
+- ESLint configuration for code quality
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (v16 or higher recommended)
+- npm (comes with Node.js)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd OWOW-AtlasAnimation
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Development Server
+
+Start the development server:
+```bash
+npm run dev
+```
+
+The application will be available at [http://localhost:5173/](http://localhost:5173/).
+
+### Building for Production
+
+To create a production build:
+```bash
+npm run build
+```
+
+The build output will be in the `dist` directory.
+
+### Previewing the Production Build
+
+To preview the production build locally:
+```bash
+npm run preview
+```
+
+## Learn More
+
+- [Vite Documentation](https://vitejs.dev/)
+- [React Documentation](https://react.dev/)
+- [ESLint Documentation](https://eslint.org/)
