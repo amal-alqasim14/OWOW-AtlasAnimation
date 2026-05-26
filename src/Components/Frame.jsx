@@ -10,6 +10,8 @@ export function Frame() {
     const [Filters, setFilters] = useState({platforms: Platforms, types: Types});
     const PlatformList = ["Web", "Mobile-iOS", "Mobile-Android"];
     const TypeList = ["Scroll", "Hover", "Tap", "Loading", "Transition", "Entrance", "Exit"];
+    const Animations = ["grow", "slide", "flip-x", "flip-y", "spin-grow"];
+    const [Animation, setAnimation] = useState("grow");
     useEffect(() => {
         TypeList.forEach(type =>
             { document.querySelector(`#box-${type}`).checked = Types.includes(type); });
@@ -32,15 +34,19 @@ export function Frame() {
         console.log(searchTags);
         document.querySelector("#search-filter-values").innerHTML = [...Platforms, ...Types, Search].join(", ");
         setFilters({platforms: Platforms, types: Types});
-    }, [Platforms, Types, Search]);
+    }, [Platforms, Types, Search, Animation]);
     return (
         <>
             <div id="top-bar">
-                <button id="menu" className="menu-collapsed" onClick={MenuToggle}></button>
+                <button id="menu" className="menu" onClick={MenuToggle}>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </button>
                 <img src={logo} id="logo" />
                 <input type="text" class="search-bar" name="search-bar-top" id="search-bar-top" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
             </div>
-            <div id="side-bar">
+            <div id="side-bar" class={Animation}>
                 <input type="text" class="search-bar" name="search-bar-bottom" id="search-bar-bottom" placeholder="Search..."/>
                 <button id="search-button" onClick={() => setSearch(document.querySelector("#search-bar-bottom").value)}>search</button>
                 <p>Filters</p>
@@ -91,6 +97,7 @@ export function Frame() {
                             {Filters.types.map((type) => <i><li id={"type-"+type}><button onClick={remove} className="filter-button">{type}</button></li></i>)}
                             {Search.length > 0 && SearchTags.map(tag => <li id={`search-input-${SearchTags.indexOf(tag)}`}><button className="filter-button" onClick={remove}>{tag}</button></li>)}
                         </ul>
+                        {Text[5]}
                     </>
                 }
             </div>
@@ -102,15 +109,15 @@ export function Frame() {
         let toggle = document.querySelector("#menu");
         let cls = toggle.getAttribute("class");
 
-        if (cls == "menu-expanded")
+        if (cls == `menu-expanded ${Animation}`)
         {
-            menu.setAttribute("class", "menu-collapsed");
-            toggle.setAttribute("class", "menu-collapsed");
+            menu.setAttribute("class", `menu-collapsed ${Animation}`);
+            toggle.setAttribute("class", `menu-collapsed ${Animation}`);
         }
         else
         {
-            menu.setAttribute("class", "menu-expanded");
-            toggle.setAttribute("class", "menu-expanded");
+            menu.setAttribute("class", `menu-expanded ${Animation}`);
+            toggle.setAttribute("class", `menu-expanded ${Animation}`);
         }
     }
 

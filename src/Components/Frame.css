@@ -1,9 +1,4 @@
 :root {
-    --grow: 1;
-    --slide: 0;
-    --flip-x: 0;
-    --flip-y: 0;
-    --spin-grow: 0;
     --top-bar-height: 50px;
     --side-bar-width: 200px;
 }
@@ -142,20 +137,65 @@
 
     #menu {
         visibility: visible;
+        position: sticky;
+        background-color: black;
+        border: 2px solid white;
+        border-radius: 25%;
+        padding: 0;
+        margin: 0;
     }
 
     #menu.menu-expanded {
-        background-color: white;
-        border: 2px solid black;
-        color: black;
-    }
-
-    #menu.menu-collapsed {
-        background-color: black;
-        border: 2px solid white;
-        color: white;
+        animation: menu-button-expand 1s forwards ease-in-out;
     }
     
+    #menu.menu-collapsed {
+        animation: menu-button-collapse 1s forwards ease-in-out;
+    }
+
+    #menu > div {
+        visibility: visible;
+        height: 10%;
+        width: 80%;
+        position: absolute;
+        border: 0;
+        border-radius: 100vh;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+        top: 50%;
+        left: 50%;
+        transform: translatex(-50%) translatey(-50%);
+        z-index: 20;
+        animation: .25s forwards ease-in-out, 2s infinite;
+    }
+
+    @keyframes blink {
+        0% {background-color: #fff;}
+        50% {background-color: #fff;}
+        55% {background-color: #bbb;}
+        100% {background-color: #fff;}
+    }
+
+    #menu > div:nth-child(1) { animation-name: menu-stripe-1-setup, blink; animation-delay: 0s, 0s; }
+    #menu > div:nth-child(2) { animation-name: menu-stripe-2-setup, blink; animation-delay: 0s, .1s; }
+    #menu > div:nth-child(3) { animation-name: menu-stripe-3-setup, blink; animation-delay: 0s, .2s; }
+    #menu.menu-expanded > div:nth-child(1) { animation-name: menu-stripe-1-expand; }
+    #menu.menu-expanded > div:nth-child(2) { animation-name: menu-stripe-2-expand; }
+    #menu.menu-expanded > div:nth-child(3) { animation-name: menu-stripe-3-expand; }
+    #menu.menu-collapsed > div:nth-child(1) { animation-name: menu-stripe-1-collapse, blink; animation-delay: 0s, 0s;  }
+    #menu.menu-collapsed > div:nth-child(2) { animation-name: menu-stripe-2-collapse, blink; animation-delay: 0s, 1s;  }
+    #menu.menu-collapsed > div:nth-child(3) { animation-name: menu-stripe-3-collapse, blink; animation-delay: 0s, 2s;  }
+    @keyframes menu-stripe-1-setup {from {} to { top: 25%; }}
+    @keyframes menu-stripe-1-expand {from {top: 25%; transform:  translatex(-50%) translatey(-50%) rotate(0deg);} to {top: 50%; transform:  translatex(-50%) translatey(-50%) rotate(45deg);}}
+    @keyframes menu-stripe-1-collapse {from {top: 50%; transform:  translatex(-50%) translatey(-50%) rotate(45deg);} to {top: 25%; transform:  translatex(-50%) translatey(-50%) rotate(0deg);}}
+    @keyframes menu-stripe-2-setup {from {} to { top: 50%; }}
+    @keyframes menu-stripe-2-expand {from {width: 80%; height: 10%; } to {width: 0; height: 10%; }}
+    @keyframes menu-stripe-2-collapse {from {width: 0; height: 10%; } to {width: 80%; height: 10%; }}
+    @keyframes menu-stripe-3-setup {from {} to { top: 75%; }}
+    @keyframes menu-stripe-3-expand {from {top: 75%; transform:  translatex(-50%) translatey(-50%) rotate(0deg);} to {top: 50%; transform:  translatex(-50%) translatey(-50%) rotate(-45deg);}}
+    @keyframes menu-stripe-3-collapse {from {top: 50%; transform:  translatex(-50%) translatey(-50%) rotate(-45deg);} to {top: 75%; transform:  translatex(-50%) translatey(-50%) rotate(0deg);}}
+
     #search-bar-top {
         visibility: collapse;
     }
@@ -170,6 +210,8 @@
         background-color: transparent;
         border: 1px solid white;
         border-radius: 1vw;
+        padding: 0;
+        margin: 0;
     }
 
     #side-bar {
@@ -182,52 +224,15 @@
         border-right: none;
         overflow: hidden;
         padding-top: 0; padding-bottom: 0; margin-top: 0; margin-bottom: 0;
+        animation: .25s forwards ease-out;
     }
 
     /* extend the menu from the top */
-    @media screen {
-        #side-bar { transform: scale(0%); }
-        #side-bar.menu-expanded { animation: appear-slide .25s forwards ease-in-out; }
-        #side-bar.menu-collapsed { animation: disappear-slide .25s forwards ease-in-out; }
-        @keyframes appear-slide { from { transform: scale(0%); } to { transform: scale(100%); } }
-        @keyframes disappear-slide { from { transform: scale(100%); } to { transform: scale(0%); } }
-    }
-
-    /* extend the menu from the top */
-    @media screen and (--slide) {
-        #side-bar { transform: translate(-100%); }
-        #side-bar.menu-expanded { animation: appear-slide .25s forwards ease-in-out; }
-        #side-bar.menu-collapsed { animation: disappear-slide .25s forwards ease-in-out; }
-        @keyframes appear-slide { from { transform: translatey(0%); } to { transform: translatey(100%); } }
-        @keyframes disappear-slide { from { transform: translatey(100%); } to { transform: translatey(0%); } }
-    }
-
-    /* flip the second menu open */
-    @media screen and (flip-y) {
-        #side-bar { transform: rotatey(-90deg) }
-        #side-bar.menu-expanded { animation: appear-flip-y .25s forwards ease-in-out; }
-        #side-bar.menu-collapsed { animation: disappear-flip-y .25s forwards ease-in-out; }
-        @keyframes appear-flip-y { from { transform: rotatey(-90deg); } to { transform: rotate(0deg); } }
-        @keyframes disappear-flip-y { from { transform: rotatey(0deg); } to { transform: rotate(-90deg); } }
-    }
-
-    /* flip the second menu open */
-    @media screen and (--flip-x) {
-        #side-bar { transform: rotatex(-90deg) }
-        #side-bar.menu-expanded { animation: appear-flip-x .25s forwards ease-in-out; }
-        #side-bar.menu-collapsed { animation: disappear-flip-x .25s forwards ease-in-out; }
-        @keyframes appear-flip-x { from { transform: rotatex(-90deg); } to { transform: rotateX(0deg); } }
-        @keyframes disappear-flip-x { from { transform: rotatex(0deg); } to { transform: rotateX(-90deg); } }
-    }
-    
-    /* spin and grow the second menu open */
-    @media screen and (--spin-grow) {
-        #side-bar { transform: rotate(-90deg) scale(0%); }
-        #side-bar.menu-expanded { animation: appear-grow .25s forwards ease-in-out; }
-        #side-bar.menu-collapsed { animation: disappear-shrink .25s forwards ease-in-out; }
-        @keyframes appear-grow { from { transform: rotate(-90deg) scale(0%); } to { transform: rotate(0deg) scale(100%); } }
-        @keyframes disappear-shrink { from { transform: rotate(0deg) scale(100%); } to { transform: rotate(-90deg) scale(0%); } }
-    }
+    #side-bar.grow { transform: translatey(-100%); }
+    #side-bar.grow.menu-expanded { animation-name: appear-slide; }
+    #side-bar.grow.menu-collapsed { animation-name: disappear-slide; }
+    @keyframes appear-slide { from { transform: translatey(-100%); } to { transform: translatey(0%); } }
+    @keyframes disappear-slide { from { transform: translatey(0%); } to { transform: translatey(-100%); } }
 
 }
 
