@@ -23,24 +23,24 @@ const ANIMATION = {
 };
 
 export function Details() {
-    const [Duration, setDuration] = useState(50);
-    const [Delay, setDelay] = useState(20);
-    const [Playing, setPlaying] = useState(false);
-    const [PreviewMode, setPreviewMode] = useState(false);
+    // const [Duration, setDuration] = useState(50);
+    // const [Delay, setDelay] = useState(20);
+    // const [Playing, setPlaying] = useState(false);
+    // const [PreviewMode, setPreviewMode] = useState(false);
     const [Copied, setCopied] = useState(false);
 
     return (
         <>
             <div id="details-topbar">
                 <button id="details-back" onClick={goBack}>← Home</button>
-                <button
+                {/* <button
                     id="details-preview-btn"
                     className={PreviewMode ? "preview-on" : ""}
                     onClick={() => setPreviewMode(!PreviewMode)}
                 >
                     <span id="details-preview-dot" />
                     Preview Mode
-                </button>
+                </button> */}
             </div>
 
             <div id="details-body">
@@ -48,11 +48,11 @@ export function Details() {
                     <h1 id="details-title">{ANIMATION.title}</h1>
 
                     <div id="details-hero-card">
-                        <ul id="details-tags">
+                        {/* <ul id="details-tags">
                             {ANIMATION.tags.map((tag, i) => (
                                 <li key={i} className="details-tag">{tag}</li>
                             ))}
-                        </ul>
+                        </ul> */}
                         <img src={ANIMATION.previewImage} id="details-hero-img" alt="preview" />
                     </div>
 
@@ -94,7 +94,7 @@ export function Details() {
                     </div>
                 </div>
 
-                <div id="details-controls">
+                {/* <div id="details-controls">
                     <p id="details-controls-heading">Controls</p>
 
                     <label className="details-controls-label">Duration</label>
@@ -120,7 +120,7 @@ export function Details() {
                     >
                         {Playing ? "⏹ Stop" : "▶ Play"}
                     </button>
-                </div>
+                </div> */}
             </div>
 
             <div id="details-browse">
