@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Details.css";
+import { useEffect } from "react";
 
 // Needs to be changed to vids
 import cursorGIF from "../assets/gifs/Cursor-driven perspective tilt GIF.gif";
@@ -34,10 +35,12 @@ const ANIMATION = {
 };
 
 export function Details() {
+
     // const [Duration, setDuration] = useState(50);
     // const [Delay, setDelay] = useState(20);
     // const [Playing, setPlaying] = useState(false);
     // const [PreviewMode, setPreviewMode] = useState(false);
+
     const [Copied, setCopied] = useState(false);
 
     return (
@@ -163,7 +166,7 @@ export function Details() {
     }
 
     function copyCode() {
-        navigator.clipboard.writeText(ANIMATION.code).catch(() => {});
+        navigator.clipboard.writeText(ANIMATION.code).catch(() => { });
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     }
