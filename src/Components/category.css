@@ -50,8 +50,9 @@ body,
 }
 
 .content {
-  width: 100%;
-  padding: 26px 6vw 90px;
+  /* width: 100%; */
+  padding: 10px 1vw 50px;
+
 }
 
 .back {

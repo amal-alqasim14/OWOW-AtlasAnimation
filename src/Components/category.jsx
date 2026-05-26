@@ -12,12 +12,13 @@ export function Category() {
 
   return (
     <div className="owow-page">
-      <main className="content">
         <div id="details-topbar">
           <button id="details-back" onClick={goBack}>
             ← Home
           </button>
         </div> 
+      <main className="content">
+        
         <h1>Scroll</h1>
 
         <section className="grid">
