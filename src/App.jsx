@@ -48,8 +48,13 @@ function App() {
               <article className="preview-card" key={card.title}>
                 <video
                   src={card.video}
-                  style={card.video === '/images/item5.webm' ? { objectPosition: 'center bottom' } : undefined}
-                  style={card.video === '/images/item4.webm' ? { objectPosition: 'center top' } : undefined}
+                  style={
+                    card.video === '/images/item5.webm'
+                      ? { objectPosition: 'center bottom' }
+                      : card.video === '/images/item4.webm'
+                        ? { objectPosition: 'center top' }
+                        : undefined
+                  }
                   loop
                   muted
                   playsInline
