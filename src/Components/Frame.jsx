@@ -6,6 +6,7 @@ export function Frame() {
     const [Platforms, setPlatforms] = useState([]);
     const [Types, setTypes] = useState([]);
     const [Search, setSearch] = useState("");
+    const [SearchTags, setSearchTags] = useState([]);
     const [Filters, setFilters] = useState({platforms: Platforms, types: Types});
     const PlatformList = ["Web", "Mobile-iOS", "Mobile-Android"];
     const TypeList = ["Scroll", "Hover", "Tap", "Loading", "Transition", "Entrance", "Exit"];
@@ -14,17 +15,34 @@ export function Frame() {
             { document.querySelector(`#box-${type}`).checked = Types.includes(type); });
         PlatformList.forEach(platform =>
             { document.querySelector(`#box-${platform}`).checked = Platforms.includes(platform); });
-        document.querySelector("#search-bar").value = Search;
+        if (Search != document.querySelector("#search-bar-top").value)
+            document.querySelector("#search-bar-top").value = Search;
+        if (Search != document.querySelector("#search-bar-bottom").value)
+            document.querySelector("#search-bar-bottom").value = Search;
+        let searchTags = [];
+        let searchString = Search.trim();
+        while (searchString.includes(" "))
+        {
+            let i = searchString.indexOf(" ");
+            searchTags = [...searchTags, searchString.substring(0, i)]
+            searchString = searchString.substring(i).trim();
+        }
+        searchTags = [...searchTags, searchString];
+        setSearchTags(searchTags);
+        console.log(searchTags);
         document.querySelector("#search-filter-values").innerHTML = [...Platforms, ...Types, Search].join(", ");
         setFilters({platforms: Platforms, types: Types});
     }, [Platforms, Types, Search]);
     return (
         <>
             <div id="top-bar">
+                <button id="menu" className="menu-collapsed" onClick={MenuToggle}></button>
                 <img src={logo} id="logo" />
-                <input type="text" name="search-bar" id="search-bar" placeholder="Search animations..." onChange={(e) => setSearch(e.target.value)} />
+                <input type="text" class="search-bar" name="search-bar-top" id="search-bar-top" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
             </div>
             <div id="side-bar">
+                <input type="text" class="search-bar" name="search-bar-bottom" id="search-bar-bottom" placeholder="Search..."/>
+                <button id="search-button" onClick={() => setSearch(document.querySelector("#search-bar-bottom").value)}>search</button>
                 <p>Filters</p>
                 <p>Platforms</p>
                 <ul id="Platform-Filter" key="Platform-Filter" onChange={update}>
@@ -71,13 +89,30 @@ export function Frame() {
                         <ul id="active-filters">
                             {Filters.platforms.map((platform) => <i><li id={"platform-"+platform}><button onClick={remove} className="filter-button">{platform}</button></li></i>)}
                             {Filters.types.map((type) => <i><li id={"type-"+type}><button onClick={remove} className="filter-button">{type}</button></li></i>)}
-                            {Search.length > 0 && <li id="search-input"><button className="filter-button" onClick={remove}>{Search}</button></li>}
+                            {Search.length > 0 && SearchTags.map(tag => <li id={`search-input-${SearchTags.indexOf(tag)}`}><button className="filter-button" onClick={remove}>{tag}</button></li>)}
                         </ul>
                     </>
                 }
             </div>
         </>
     );
+
+    function MenuToggle(e) {
+        let menu = document.querySelector("#side-bar");
+        let toggle = document.querySelector("#menu");
+        let cls = toggle.getAttribute("class");
+
+        if (cls == "menu-expanded")
+        {
+            menu.setAttribute("class", "menu-collapsed");
+            toggle.setAttribute("class", "menu-collapsed");
+        }
+        else
+        {
+            menu.setAttribute("class", "menu-expanded");
+            toggle.setAttribute("class", "menu-expanded");
+        }
+    }
 
     function remove(e) {
         e = e.target.innerText;
