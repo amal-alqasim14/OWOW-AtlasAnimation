@@ -1,144 +1,149 @@
-import React, { useEffect, useState } from "react";
-import logo from "../assets/Union.svg"
+import React, { useState } from "react";
+import logo from "../assets/Union.svg";
 import "./Frame.css";
 
-export function Frame() {
-    const [Platforms, setPlatforms] = useState([]);
-    const [Types, setTypes] = useState([]);
-    const [Search, setSearch] = useState("");
-    const [SearchTags, setSearchTags] = useState([]);
-    const [Filters, setFilters] = useState({platforms: Platforms, types: Types});
-    const PlatformList = ["Web", "Mobile-iOS", "Mobile-Android"];
-    const TypeList = ["Tap", "Hover", "Scroll", "Loading", "Transition", "Entrance", "Exit"];
-    useEffect(() => {
-        TypeList.forEach(type =>
-            { document.querySelector(`#box-${type}`).checked = Types.includes(type); });
-        PlatformList.forEach(platform =>
-            { document.querySelector(`#box-${platform}`).checked = Platforms.includes(platform); });
-        if (Search != document.querySelector("#search-bar-top").value)
-            document.querySelector("#search-bar-top").value = Search;
-        if (Search != document.querySelector("#search-bar-bottom").value)
-            document.querySelector("#search-bar-bottom").value = Search;
-        let searchTags = [];
-        let searchString = Search.trim();
-        while (searchString.includes(" "))
-        {
-            let i = searchString.indexOf(" ");
-            searchTags = [...searchTags, searchString.substring(0, i)]
-            searchString = searchString.substring(i).trim();
-        }
-        searchTags = [...searchTags, searchString];
-        setSearchTags(searchTags);
-        console.log(searchTags);
-        document.querySelector("#search-filter-values").innerHTML = [...Platforms, ...Types, Search].join(", ");
-        setFilters({platforms: Platforms, types: Types});
-    }, [Platforms, Types, Search]);
-    return (
-        <>
-            <div id="top-bar">
-                <button id="menu" className="menu-collapsed" onClick={MenuToggle}></button>
-                <img src={logo} id="logo" />
-                <input type="text" class="search-bar" name="search-bar-top" id="search-bar-top" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
-            </div>
-            <div id="side-bar">
-                <input type="text" class="search-bar" name="search-bar-bottom" id="search-bar-bottom" placeholder="Search..."/>
-                <button id="search-button" onClick={() => setSearch(document.querySelector("#search-bar-bottom").value)}>search</button>
-                <p>Filters</p>
-                <p>Platforms</p>
-                <ul id="Platform-Filter" key="Platform-Filter" onChange={update}>
-                    {
-                        PlatformList.map((platform) => (
-                            <li>
-                                {
-                                    Platforms.includes(platform) &&
-                                        <input type="checkbox" name={platform} id={"box-"+platform} checked /> ||
-                                        <input type="checkbox" name={platform} id={"box-"+platform} />
-                                }
-                                {
-                                    Platforms.includes(platform) &&
-                                        <i><label htmlFor={"box-"+platform}>{platform}</label></i> ||
-                                        <label htmlFor={"box-"+platform}>{platform}</label>
-                                }
-                            </li>
-                        ))
-                    }
-                </ul>
-                <p>Types</p>
-                <ul id="Type-Filter" key="Type-Filter" onChange={update}>
-                    {
-                        TypeList.map((type) => (
-                            <li>
-                                {
-                                    Types.includes(type) &&
-                                        <input type="checkbox" name={type} id={"box-"+type} checked /> ||
-                                        <input type="checkbox" name={type} id={"box-"+type} />
-                                }
-                                {
-                                    Types.includes(type) &&
-                                        <i><label htmlFor={"box-"+type}>{type}</label></i> ||
-                                        <label htmlFor={"box-"+type}>{type}</label>
-                                }
-                            </li>
-                        ))
-                    }
-                </ul>
-                {
-                    (Filters.platforms.length > 0 || Filters.types.length > 0 || Search.length > 0) &&
-                    <>
-                        <p>Active filters</p>
-                        <ul id="active-filters">
-                            {Filters.platforms.map((platform) => <i><li id={"platform-"+platform}><button onClick={remove} className="filter-button">{platform}</button></li></i>)}
-                            {Filters.types.map((type) => <i><li id={"type-"+type}><button onClick={remove} className="filter-button">{type}</button></li></i>)}
-                            {Search.length > 0 && SearchTags.map(tag => <li id={`search-input-${SearchTags.indexOf(tag)}`}><button className="filter-button" onClick={remove}>{tag}</button></li>)}
-                        </ul>
-                    </>
-                }
-            </div>
-        </>
-    );
+export function Frame({ selectedTypes, setSelectedTypes }) {
+  const [platforms, setPlatforms] = useState([]);
+  const [search, setSearch] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    function MenuToggle(e) {
-        let menu = document.querySelector("#side-bar");
-        let toggle = document.querySelector("#menu");
-        let cls = toggle.getAttribute("class");
+  const platformList = ["Web", "Mobile-iOS", "Mobile-Android"];
+  const typeList = ["Tap", "Hover", "Scroll", "Loading", "Transition", "Entrance", "Exit"];
 
-        if (cls == "menu-expanded")
-        {
-            menu.setAttribute("class", "menu-collapsed");
-            toggle.setAttribute("class", "menu-collapsed");
-        }
-        else
-        {
-            menu.setAttribute("class", "menu-expanded");
-            toggle.setAttribute("class", "menu-expanded");
-        }
+  const searchTags = search.trim() === "" ? [] : search.trim().split(/\s+/);
+
+  function togglePlatform(platform) {
+    if (platforms.includes(platform)) {
+      setPlatforms(platforms.filter((item) => item !== platform));
+    } else {
+      setPlatforms([...platforms, platform]);
     }
+  }
 
-    function remove(e) {
-        e = e.target.innerText;
-        if (Platforms.includes(e)) { setPlatforms(Platforms.filter(platform => platform != e)); }
-        else if (Types.includes(e)) { setTypes(Types.filter(type => type != e)); }
-        else if (e === Search) setSearch("");
+  function toggleType(type) {
+    if (selectedTypes.includes(type)) {
+      setSelectedTypes(selectedTypes.filter((item) => item !== type));
+    } else {
+      setSelectedTypes([...selectedTypes, type]);
     }
+  }
 
-    function update(e) {
-        let platforms = Platforms;
-        let types = Types;
-        if (document.querySelector("#Platform-Filter").querySelectorAll(`#box-${e.target.name}`).length > 0)
-        {
-            if (e.target.checked) setPlatforms(platforms = [...platforms, e.target.name]);
-            else {
-                platforms = platforms.filter(platform => platform != e.target.name);
-                setPlatforms(platforms);
-            }
-        }
-        if (document.querySelector("#Type-Filter").querySelectorAll(`#box-${e.target.name}`).length > 0)
-        {
-            if (e.target.checked) setTypes(types = [...types, e.target.name]);
-            else {
-                types = types.filter(type => type != e.target.name);
-                setTypes(types);
-            }
-        }
+  function removeFilter(value) {
+    if (platforms.includes(value)) {
+      setPlatforms(platforms.filter((item) => item !== value));
+    } else if (selectedTypes.includes(value)) {
+      setSelectedTypes(selectedTypes.filter((item) => item !== value));
+    } else {
+      setSearch("");
     }
+  }
+
+  return (
+    <>
+      <div id="top-bar">
+        <button
+          id="menu"
+          className={menuOpen ? "menu-expanded" : "menu-collapsed"}
+          onClick={() => setMenuOpen(!menuOpen)}
+        ></button>
+
+        <img src={logo} id="logo" alt="OWOW logo" />
+
+        <input
+          type="text"
+          className="search-bar"
+          id="search-bar-top"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      <div
+        id="side-bar"
+        className={menuOpen ? "menu-expanded" : "menu-collapsed"}
+      >
+        <input
+          type="text"
+          className="search-bar"
+          id="search-bar-bottom"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <p>Filters</p>
+
+        <p>Platforms</p>
+        <ul id="Platform-Filter">
+          {platformList.map((platform) => (
+            <li key={platform}>
+              <input
+                type="checkbox"
+                id={`box-${platform}`}
+                checked={platforms.includes(platform)}
+                onChange={() => togglePlatform(platform)}
+              />
+              <label htmlFor={`box-${platform}`}>{platform}</label>
+            </li>
+          ))}
+        </ul>
+
+        <p>Types</p>
+        <ul id="Type-Filter">
+          {typeList.map((type) => (
+            <li key={type}>
+              <input
+                type="checkbox"
+                id={`box-${type}`}
+                checked={selectedTypes.includes(type)}
+                onChange={() => toggleType(type)}
+              />
+              <label htmlFor={`box-${type}`}>{type}</label>
+            </li>
+          ))}
+        </ul>
+
+        {(platforms.length > 0 || selectedTypes.length > 0 || search.length > 0) && (
+          <>
+            <p>Active filters</p>
+            <ul id="active-filters">
+              {platforms.map((platform) => (
+                <li key={platform}>
+                  <button
+                    onClick={() => removeFilter(platform)}
+                    className="filter-button"
+                  >
+                    {platform}
+                  </button>
+                </li>
+              ))}
+
+              {selectedTypes.map((type) => (
+                <li key={type}>
+                  <button
+                    onClick={() => removeFilter(type)}
+                    className="filter-button"
+                  >
+                    {type}
+                  </button>
+                </li>
+              ))}
+
+              {searchTags.map((tag) => (
+                <li key={tag}>
+                  <button
+                    onClick={() => setSearch("")}
+                    className="filter-button"
+                  >
+                    {tag}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+    </>
+  );
 }
