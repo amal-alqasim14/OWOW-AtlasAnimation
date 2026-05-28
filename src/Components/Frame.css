@@ -83,10 +83,12 @@
     margin-right: 2%;
     width: 80%;
     border-image: none;
+    visibility: collapse;
 }
 
 #search-bar-bottom:active {
     border-image: none;
+    visibility: collapse;
 }
 
 #search-button {
@@ -99,6 +101,7 @@
     border-right: 1px solid white;
     background-color: #000e;
     overflow: auto;
+    width: 100%;
     z-index: 9;
 }
 
@@ -209,6 +212,10 @@
         visibility: collapse;
     }
 
+    #search-bar-bottom {
+        visibility: visible;
+    }
+
     #search-button {
         visibility: visible;
         background-color: transparent;
@@ -242,6 +249,7 @@
 
 #content {
     grid-area: content;
+    width: 100%;
     overflow: auto;
 }
 
