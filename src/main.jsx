@@ -29,6 +29,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<Home />} />
           <Route path="/category" element={<Category />} />
           <Route path="/details" element={<Details />} />
+          <Route path="/category/:type" element={<Category />} />
         </Routes>
       </div>
 

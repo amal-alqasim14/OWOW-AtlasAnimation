@@ -1,102 +1,166 @@
 import { Link } from "react-router-dom";
-import './Home.css';
+import "./Home.css";
+
 import item1 from "../assets/images/item1.webm";
 import item2 from "../assets/images/item2.webm";
 import item3 from "../assets/images/item3.webm";
 import item4 from "../assets/images/item4.webm";
 import item5 from "../assets/images/item5.webm";
 import item6 from "../assets/images/item6.webm";
-import { useEffect } from "react";
 
 function Home() {
+  const sections = [
+    {
+      title: "Scroll",
+      route: "/category/scroll",
 
-    const sections = [
+      cards: [
         {
-            title: 'Scroll',
-            route: '/category',
-            cards: [
-                { title: 'Scrubbed Bento Gallery', video: item1 },
-                { title: 'Link to Scroll Progress', video: item2 },
-                { title: 'Horizontal Scroll', video: item3 },
-            ],
+          title: "Scrubbed Bento Gallery",
+          video: item1,
         },
+
         {
-            title: 'Hover',
-            route: '/details',
-            cards: [
-                { title: 'Cursor Tracking Image', video: item4 },
-                { title: 'MacOS Dock Effect', video: item5 },
-                { title: 'Proximity Scale Grid', video: item6 },
-            ],
+          title: "Link to Scroll Progress",
+          video: item2,
         },
-    ]
 
-    return (
-        <main className="home-page">
-            <section className="hero-panel">
-                <div className="hero-copy">
-                    <h1>Explore Atlas Animations</h1>
+        {
+          title: "Horizontal Scroll",
+          video: item3,
+        },
+      ],
+    },
 
-                    <p>
-                        Discover, preview and reuse animations across Atlas projects
-                    </p>
-                </div>
+    {
+      title: "Hover",
+      route: "/category/hover",
 
-                <button
-                    className="hero-cta"
-                    type="button"
-                    aria-label="Explore all our work"
-                >
-                    <span className="hero-cta-label">
-                        EXPLORE ALL OUR WORK
-                    </span>
+      cards: [
+        {
+          title: "Cursor Tracking Image",
+          video: item4,
+        },
 
-                    <span aria-hidden="true">&rarr;</span>
-                </button>
-            </section>
+        {
+          title: "MacOS Dock Effect",
+          video: item5,
+        },
 
-            {sections.map((section) => (
-                <section className="gallery-section" key={section.title}>
-                    <div className="section-head">
-                        <h2>{section.title}</h2>
+        {
+          title: "Proximity Scale Grid",
+          video: item6,
+        },
+      ],
+    },
+  ];
 
-                        <Link to={section.route} className="view-all">
-                            <span>View all</span>
-                            <span className="view-all-arrow" aria-hidden="true">&gt;</span>
-                        </Link>
-                    </div>
+  return (
+    <main className="home-page">
+      <section className="hero-panel">
+        <div className="hero-copy">
+          <h1>Explore Atlas Animations</h1>
 
-                    <div className="card-grid">
-                        {section.cards.map((card) => (
-                            <article className="preview-card" key={card.title}>
-                                <video
-                                    src={card.video}
-                                    style={
-                                        card.video === item5
-                                            ? { objectPosition: 'center bottom' }
-                                            : card.video === item4
-                                                ? { objectPosition: 'center top' }
-                                                : undefined
-                                    }
-                                    loop
-                                    muted
-                                    playsInline
-                                    preload="metadata"
-                                    onMouseEnter={(e) => e.currentTarget.play()}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.pause();
-                                        e.currentTarget.currentTime = 0;
-                                    }}
-                                    aria-label={card.title}
-                                />
-                                <p>{card.title}</p>
-                            </article>
-                        ))}
-                    </div>
-                </section>
+          <p>
+            Discover, preview and reuse animations across Atlas projects
+          </p>
+        </div>
+
+        <Link
+        //   to="/category"
+          className="preview-card hero-preview-card"
+        >
+          <video
+            src={item1}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            onMouseEnter={(e) => e.currentTarget.play()}
+            onMouseLeave={(e) => {
+              e.currentTarget.pause();
+              e.currentTarget.currentTime = 0;
+            }}
+            aria-label="Explore all our work"
+          />
+
+          <p>Explore all our work</p>
+        </Link>
+      </section>
+
+      {sections.map((section) => (
+        <section
+          className="gallery-section"
+          key={section.title}
+        >
+          <div className="section-head">
+            <h2>{section.title}</h2>
+
+            <Link
+              to={section.route}
+              className="view-all"
+            >
+              <span>View all</span>
+
+              <span
+                className="view-all-arrow"
+                aria-hidden="true"
+              >
+                &gt;
+              </span>
+            </Link>
+          </div>
+
+          <div className="card-grid">
+            {section.cards.map((card) => (
+              <Link
+                to="/details"
+                state={{
+                  animation: {
+                    ...card,
+                    previewVideo: card.video,
+                  },
+                }}
+                className="preview-card"
+                key={card.title}
+              >
+                <video
+                  src={card.video}
+                  style={
+                    card.video === item5
+                      ? {
+                          objectPosition:
+                            "center bottom",
+                        }
+                      : card.video === item4
+                      ? {
+                          objectPosition:
+                            "center top",
+                        }
+                      : undefined
+                  }
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.play();
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.pause();
+                    e.currentTarget.currentTime = 0;
+                  }}
+                  aria-label={card.title}
+                />
+
+                <p>{card.title}</p>
+              </Link>
             ))}
-        </main>
-    );
+          </div>
+        </section>
+      ))}
+    </main>
+  );
 }
 
 export default Home;
