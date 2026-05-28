@@ -8,7 +8,7 @@ import item4 from "../assets/images/item4.webm";
 import item5 from "../assets/images/item5.webm";
 import item6 from "../assets/images/item6.webm";
 
-function Home({ selectedTypes }) {
+function Home({ selectedTypes, search }) {
   const sections = [
     {
       title: "Scroll",
@@ -30,16 +30,29 @@ function Home({ selectedTypes }) {
     },
   ];
 
-  const filteredSections =
-    selectedTypes.length === 0
-      ? sections
-      : sections.filter((section) => selectedTypes.includes(section.title));
+  const filteredSections = sections
+    .map((section) => ({
+      ...section,
+      cards: section.cards.filter((card) => {
+        const matchesType =
+          selectedTypes.length === 0 || selectedTypes.includes(section.title);
+
+        const matchesSearch =
+          search.trim() === "" ||
+          card.title.toLowerCase().includes(search.toLowerCase()) ||
+          section.title.toLowerCase().includes(search.toLowerCase());
+
+        return matchesType && matchesSearch;
+      }),
+    }))
+    .filter((section) => section.cards.length > 0);
 
   return (
     <main className="home-page">
       <section className="hero-panel">
         <div className="hero-copy">
           <h1>Explore Atlas Animations</h1>
+
           <p>Discover, preview and reuse animations across Atlas projects</p>
         </div>
 
@@ -56,9 +69,14 @@ function Home({ selectedTypes }) {
               e.currentTarget.currentTime = 0;
             }}
           />
+
           <p>Explore all our work</p>
         </Link>
       </section>
+
+      {filteredSections.length === 0 && (
+        <p className="empty-state">No animations found.</p>
+      )}
 
       {filteredSections.map((section) => (
         <section className="gallery-section" key={section.title}>
@@ -67,6 +85,7 @@ function Home({ selectedTypes }) {
 
             <Link to={section.route} className="view-all">
               <span>View all</span>
+
               <span className="view-all-arrow" aria-hidden="true">
                 &gt;
               </span>
@@ -88,6 +107,13 @@ function Home({ selectedTypes }) {
               >
                 <video
                   src={card.video}
+                  style={
+                    card.video === item5
+                      ? { objectPosition: "center bottom" }
+                      : card.video === item4
+                      ? { objectPosition: "center top" }
+                      : undefined
+                  }
                   loop
                   muted
                   playsInline
@@ -97,6 +123,7 @@ function Home({ selectedTypes }) {
                     e.currentTarget.pause();
                     e.currentTarget.currentTime = 0;
                   }}
+                  aria-label={card.title}
                 />
 
                 <p>{card.title}</p>

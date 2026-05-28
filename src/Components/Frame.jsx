@@ -2,13 +2,25 @@ import React, { useState } from "react";
 import logo from "../assets/Union.svg";
 import "./Frame.css";
 
-export function Frame({ selectedTypes, setSelectedTypes }) {
+export function Frame({
+  selectedTypes,
+  setSelectedTypes,
+  search,
+  setSearch,
+}) {
   const [platforms, setPlatforms] = useState([]);
-  const [search, setSearch] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
   const platformList = ["Web", "Mobile-iOS", "Mobile-Android"];
-  const typeList = ["Tap", "Hover", "Scroll", "Loading", "Transition", "Entrance", "Exit"];
+  const typeList = [
+    "Tap",
+    "Hover",
+    "Scroll",
+    "Loading",
+    "Transition",
+    "Entrance",
+    "Exit",
+  ];
 
   const searchTags = search.trim() === "" ? [] : search.trim().split(/\s+/);
 
@@ -84,6 +96,7 @@ export function Frame({ selectedTypes, setSelectedTypes }) {
                 checked={platforms.includes(platform)}
                 onChange={() => togglePlatform(platform)}
               />
+
               <label htmlFor={`box-${platform}`}>{platform}</label>
             </li>
           ))}
@@ -99,14 +112,18 @@ export function Frame({ selectedTypes, setSelectedTypes }) {
                 checked={selectedTypes.includes(type)}
                 onChange={() => toggleType(type)}
               />
+
               <label htmlFor={`box-${type}`}>{type}</label>
             </li>
           ))}
         </ul>
 
-        {(platforms.length > 0 || selectedTypes.length > 0 || search.length > 0) && (
+        {(platforms.length > 0 ||
+          selectedTypes.length > 0 ||
+          search.length > 0) && (
           <>
             <p>Active filters</p>
+
             <ul id="active-filters">
               {platforms.map((platform) => (
                 <li key={platform}>

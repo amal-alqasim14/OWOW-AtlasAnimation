@@ -207,6 +207,10 @@
 .hero-preview-card {
   min-height: 280px;
 }
+.empty-state {
+  color: #bdbdbd;
+  padding: 24px;
+}
 
 @media (max-width: 1120px) {
   .hero-panel {
