@@ -100,8 +100,6 @@
 
 /* ── Hero card ───────────────────────────────────────────────── */
 #details-hero-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
     border-radius: var(--radius);
     display: flex;
     align-items: flex-start;
@@ -127,12 +125,13 @@
     list-style: none !important;
 }
 
-#details-hero-img {
-    border-radius: 6px;
-    flex-shrink: 0;
-    height: 80px;
-    object-fit: cover;
-    width: 120px;
+#details-hero-video {
+    border: none;
+    border-radius: var(--radius);
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    padding: 0;
 }
 
 /* ── Info row ────────────────────────────────────────────────── */

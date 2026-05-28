@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import "./Details.css";
 import { useEffect } from "react";
 
+// Needs to be changed to vids
+import item1 from "../assets/images/item1.webm";
+import item2 from "../assets/images/item2.webm";
+import item3 from "../assets/images/item3.webm";
+import item4 from "../assets/images/item4.webm";
+import item5 from "../assets/images/item5.webm";
+import item6 from "../assets/images/item6.webm";
+
 const ANIMATION = {
     title: "Cursor Tracking Image",
     tags: [
@@ -11,38 +19,39 @@ const ANIMATION = {
         "onComplete onUpdate quickSetter quickTo utils.toArray",
         "Power2 Power3 Power4 Back Elastic Bounce Expo Sine",
     ],
-    previewImage: "https://placehold.co/120x80/2a5a2a/7ecb7e?text=~",
+    previewVideo: item1,
     description: `This animation creates a "text scrambling" or "decrypting" effect where letters rapidly cycle through random characters before resolving into readable text. It gives the impression of a system decoding data in real time. The animation typically transitions from chaotic noise into a clean final message, making it feel dynamic, futuristic, and interactive.`,
     goodFor: "Short phrases, headings, or key UI moments.",
     avoidFor: "Large blocks of body text.",
     code: `// use the defaults\ngsap.to(element, { duration: 1, scrambleText: "THIS IS NEW TEXT!" });\n\n// for customize things\ngsap.to(element, {\n  duration: 1,\n  scrambleText: {\n    text: "THIS IS NEW TEXT",\n    chars: "liz",\n    revealDelay: 0.5,\n    speed: 0.3,\n    newClass: "myClass"\n  }\n});`,
     related: [
-        { id: 1, title: "Cursor Tracking Image", image: "https://placehold.co/400x225/1a3a1a/7ecb7e?text=~", tags: ["restart reverse scrub pin markers overwrite modifiers"] },
-        { id: 2, title: "MacOS Dock Effect", image: "https://placehold.co/400x225/1a1a3a/7e7ecb?text=●●●", tags: ["toggleActions start end once refresh from to"] },
-        { id: 3, title: "Proximity Scale Grid", image: "https://placehold.co/400x225/2a2a2a/888?text=grid", tags: ["ScrollSmoother Flip Draggable SplitText"] },
+        { id: 1, title: "Cursor Tracking Image",  video: item2,   tags: ["restart reverse scrub pin markers overwrite modifiers"] },
+        { id: 2, title: "MacOS Dock Effect",       video: item3, tags: ["toggleActions start end once refresh from to"] },
+        { id: 3, title: "Proximity Scale Grid",    video: item4,   tags: ["ScrollSmoother Flip Draggable SplitText"] },
     ],
 };
 
 export function Details() {
 
-    const [Duration, setDuration] = useState(50);
-    const [Delay, setDelay] = useState(20);
-    const [Playing, setPlaying] = useState(false);
-    const [PreviewMode, setPreviewMode] = useState(false);
+    // const [Duration, setDuration] = useState(50);
+    // const [Delay, setDelay] = useState(20);
+    // const [Playing, setPlaying] = useState(false);
+    // const [PreviewMode, setPreviewMode] = useState(false);
+
     const [Copied, setCopied] = useState(false);
 
     return (
         <>
             <div id="details-topbar">
                 <button id="details-back" onClick={goBack}>← Home</button>
-                <button
+                {/* <button
                     id="details-preview-btn"
                     className={PreviewMode ? "preview-on" : ""}
                     onClick={() => setPreviewMode(!PreviewMode)}
                 >
                     <span id="details-preview-dot" />
                     Preview Mode
-                </button>
+                </button> */}
             </div>
 
             <div id="details-body">
@@ -50,12 +59,25 @@ export function Details() {
                     <h1 id="details-title">{ANIMATION.title}</h1>
 
                     <div id="details-hero-card">
-                        <ul id="details-tags">
+                        {/* <ul id="details-tags">
                             {ANIMATION.tags.map((tag, i) => (
                                 <li key={i} className="details-tag">{tag}</li>
                             ))}
-                        </ul>
-                        <img src={ANIMATION.previewImage} id="details-hero-img" alt="preview" />
+                        </ul> */}
+                        <video 
+                            src={ANIMATION.previewVideo} 
+                            id="details-hero-video" 
+                            alt="preview" 
+                            loop
+                            muted
+                            playsInline
+                            preload="metadata"
+                            onMouseEnter={(e) => e.currentTarget.play()}
+                            onMouseLeave={(e) =>{
+                                e.currentTarget.pause();
+                                e.currentTarget.currentTime = 0;
+                            }}
+                        />
                     </div>
 
                     <div id="details-info-row">
@@ -96,7 +118,7 @@ export function Details() {
                     </div>
                 </div>
 
-                <div id="details-controls">
+                {/* <div id="details-controls">
                     <p id="details-controls-heading">Controls</p>
 
                     <label className="details-controls-label">Duration</label>
@@ -122,7 +144,7 @@ export function Details() {
                     >
                         {Playing ? "⏹ Stop" : "▶ Play"}
                     </button>
-                </div>
+                </div> */}
             </div>
 
             <div id="details-browse">
@@ -131,7 +153,20 @@ export function Details() {
                     {ANIMATION.related.map((item) => (
                         <div key={item.id} className="related-card">
                             <div className="related-card-img-wrap">
-                                <img src={item.image} alt={item.title} className="related-card-img" />
+                                <video 
+                                    src={item.video} 
+                                    alt={item.title} 
+                                    className="related-card-img" 
+                                    loop
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    onMouseEnter={(e) => e.currentTarget.play()}
+                                    onMouseLeave={(e) =>{
+                                        e.currentTarget.pause();
+                                        e.currentTarget.currentTime = 0;
+                                    }}
+                                />
                             </div>
                             <div className="related-card-tags">
                                 {item.tags.map((t, i) => <p key={i} className="related-card-tag">{t}</p>)}
