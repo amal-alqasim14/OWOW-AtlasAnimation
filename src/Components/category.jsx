@@ -1,37 +1,45 @@
 import "./category.css";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import item1 from "../assets/images/item1.webm";
 import item2 from "../assets/images/item2.webm";
 import item3 from "../assets/images/item3.webm";
 import item4 from "../assets/images/item4.webm";
+import item5 from "../assets/images/item5.webm";
+import item6 from "../assets/images/item6.webm";
 
 export function Category() {
   const navigate = useNavigate();
+  const { type } = useParams();
 
   function goBack() {
     navigate("/");
   }
 
-  const cards = [
-    {
-      title: "Velocity Scroll",
-      video: item1,
+  const categoryData = {
+    scroll: {
+      title: "Scroll",
+      cards: [
+        { title: "Velocity Scroll", video: item1 },
+        { title: "Horizontal Text", video: item2 },
+        { title: "Scrubbed Bento Gallery", video: item3 },
+        { title: "Infinite card slider", video: item4 },
+      ],
     },
-    {
-      title: "Horizontal Text",
-      video: item2,
+
+    hover: {
+      title: "Hover",
+      cards: [
+        { title: "Cursor Tracking Image", video: item4 },
+        { title: "MacOS Dock Effect", video: item5 },
+        { title: "Proximity Scale Grid", video: item6 },
+        { title: "Hover Animation", video: item1 },
+      ],
     },
-    {
-      title: "Scrubbed Bento Gallery",
-      video: item3,
-    },
-    {
-      title: "Infinite card slider",
-      video: item4,
-    },
-  ];
+  };
+
+  const currentCategory = categoryData[type] || categoryData.scroll;
 
   return (
     <div className="owow-page">
@@ -42,10 +50,10 @@ export function Category() {
       </div>
 
       <main className="content">
-        <h1>Scroll</h1>
+        <h1>{currentCategory.title}</h1>
 
         <section className="grid">
-          {cards.map((card) => (
+          {currentCategory.cards.map((card) => (
             <div className="card clickable" key={card.title}>
               <video
                 src={card.video}
@@ -53,9 +61,7 @@ export function Category() {
                 muted
                 playsInline
                 preload="metadata"
-                onMouseEnter={(e) => {
-                  e.currentTarget.play();
-                }}
+                onMouseEnter={(e) => e.currentTarget.play()}
                 onMouseLeave={(e) => {
                   e.currentTarget.pause();
                   e.currentTarget.currentTime = 0;
