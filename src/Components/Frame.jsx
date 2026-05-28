@@ -9,8 +9,7 @@ export function Frame() {
     const [SearchTags, setSearchTags] = useState([]);
     const [Filters, setFilters] = useState({platforms: Platforms, types: Types});
     const PlatformList = ["Web", "Mobile-iOS", "Mobile-Android"];
-    const TypeList = ["Scroll", "Hover", "Tap", "Loading", "Transition", "Entrance", "Exit"];
-    const Animations = ["grow", "slide", "flip-x", "flip-y", "spin-grow"];
+    const TypeList = ["Tap", "Hover", "Scroll", "Loading", "Transition", "Entrance", "Exit"]
     const [Animation, setAnimation] = useState("grow");
     useEffect(() => {
         TypeList.forEach(type =>
@@ -47,7 +46,7 @@ export function Frame() {
                 <input type="text" class="search-bar" name="search-bar-top" id="search-bar-top" placeholder="Search..." onChange={(e) => setSearch(e.target.value)} />
             </div>
             <div id="side-bar" class={Animation}>
-                <input type="text" class="search-bar" name="search-bar-bottom" id="search-bar-bottom" placeholder="Search..."/>
+                <input type="text" class="search-bar" name="search-bar-bottom" id="search-bar-bottom" placeholder="Search..." onKeyUp={(e) => e.code === "Enter" && setSearch(document.querySelector("#search-bar-bottom").value) && console.log(e)}/>
                 <button id="search-button" onClick={() => setSearch(document.querySelector("#search-bar-bottom").value)}>search</button>
                 <p>Filters</p>
                 <p>Platforms</p>
