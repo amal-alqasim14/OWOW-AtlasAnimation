@@ -88,7 +88,6 @@
 
 #search-bar-bottom:active {
     border-image: none;
-    visibility: collapse;
 }
 
 #search-button {
