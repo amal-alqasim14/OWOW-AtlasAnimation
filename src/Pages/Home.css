@@ -204,6 +204,10 @@
   opacity: 1;
 }
 
+.hero-preview-card {
+  min-height: 280px;
+}
+
 @media (max-width: 1120px) {
   .hero-panel {
     grid-template-columns: 1fr;
