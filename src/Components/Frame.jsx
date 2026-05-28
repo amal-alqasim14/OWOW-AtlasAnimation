@@ -9,7 +9,7 @@ export function Frame() {
     const [SearchTags, setSearchTags] = useState([]);
     const [Filters, setFilters] = useState({platforms: Platforms, types: Types});
     const PlatformList = ["Web", "Mobile-iOS", "Mobile-Android"];
-    const TypeList = ["Scroll", "Hover", "Tap", "Loading", "Transition", "Entrance", "Exit"];
+    const TypeList = ["Tap", "Hover", "Scroll", "Loading", "Transition", "Entrance", "Exit"];
     useEffect(() => {
         TypeList.forEach(type =>
             { document.querySelector(`#box-${type}`).checked = Types.includes(type); });
