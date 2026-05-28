@@ -67,7 +67,7 @@ function Home() {
         </div>
 
         <Link
-          to="/category/scroll"
+        //   to="/category"
           className="preview-card hero-preview-card"
         >
           <video
